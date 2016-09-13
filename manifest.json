@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "worder",
+  "version": "0.1.0",
+  "author": "treelite <c.xinle@gmail.com>",
+  "background": {
+    "scripts": ["main.js"],
+    "persistent": false
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["http://dictionary.cambridge.org/dictionary/learner-english/*"],
+      "js": ["src/worder.js"]
+    }
+  ]
+}
