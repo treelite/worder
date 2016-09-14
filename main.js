@@ -5,17 +5,13 @@
 
 (function () {
 
-    let query = keys => {
-        return new Promise((resolve, reject) => {
-            chrome.storage.local.get(keys, data => chrome.runtime.lastError ? reject() : resolve(data));
-        });
-    };
+    let query = keys => new Promise((resolve, reject) => {
+        chrome.storage.local.get(keys, data => chrome.runtime.lastError ? reject() : resolve(data));
+    });
 
-    let save = data => {
-        return new Promise((resolve, reject) => {
-            chrome.storage.local.set(data, () => chrome.runtime.lastError ? reject() : resolve());
-        });
-    };
+    let save = data => new Promise((resolve, reject) => {
+        chrome.storage.local.set(data, () => chrome.runtime.lastError ? reject() : resolve());
+    });
 
     let processors = {
 
@@ -29,9 +25,9 @@
         },
 
         add(req) {
-            let meta = req.meta;
+            let meta = req.data;
             let indexName = 'index' + meta.word.charAt(0).toUpperCase();
-            return query(['list', `index${indexName}`]).then(data => {
+            return query(['list', `${indexName}`]).then(data => {
                 let list = data.list || [];
                 meta.date = Date.now();
                 list.push(meta);
@@ -39,7 +35,23 @@
                 index[meta.word] = true;
                 data.list = list;
                 data[indexName] = index;
-                return save(data);
+                return save(data).then(() => true, () => false);
+            });
+        },
+
+        remove(req) {
+            let word = req.data;
+            let indexName = 'index' + word.charAt(0).toUpperCase();
+            return query(['list', `${indexName}`]).then(data => {
+                let list = data.list;
+                for (let [i, v] of list.entries()) {
+                    if (v.word === word) {
+                        list.splice(i, 1);
+                        break;
+                    }
+                }
+                delete data[indexName][word];
+                return save(data).then(() => true, () => false);
             });
         }
 

@@ -1,0 +1,25 @@
+ins.worder {
+    float: right;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ins[data-type="add"] {
+    color: #D0A44C;
+}
+
+ins[data-type="add"]::before {
+    content: '+';
+    display: inline-block;
+}
+
+ins[data-type="remove"] {
+    color: #E84427;
+}
+
+ins[data-type="remove"]::before {
+    content: '-';
+    display: inline-block;
+}

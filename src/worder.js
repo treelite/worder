@@ -5,14 +5,16 @@
 
 (function () {
 
-    var htmlTagExp = /<[^>]+>/g;
+    const CLS = 'worder';
+
+    let htmlTagExp = /<[^>]+>/g;
 
     function trimHTML(str) {
         return str.replace(htmlTagExp, '');
     }
 
-    function getInfo(word) {
-        let res = {means: [], word};
+    function getInfo() {
+        let res = {means: [], word: getWord()};
 
         let infoEle = document.querySelector('span.di-info');
         res.type = infoEle.querySelector('span.posgram span.pos').innerHTML;
@@ -26,7 +28,8 @@
         let blocks = body.querySelectorAll('div.sense-block');
         for (let ele of blocks) {
             res.means.push(
-                ele.querySelector('span.sense-title strong').innerHTML + ' | ' + trimHTML(ele.querySelector('b.def').innerHTML)
+                ele.querySelector('span.sense-title strong').innerHTML
+                    + ' | ' + trimHTML(ele.querySelector('b.def').innerHTML)
             );
         }
 
@@ -37,37 +40,48 @@
         return document.querySelector('h2.di-title').innerHTML;
     }
 
-    function addWord(word) {
-        let meta = getInfo(word);
-        chrome.runtime.sendMessage({type: 'add', meta}, addTag);
-    }
-
-    function clear() {
-        let title = document.querySelector('h2.di-title');
-        let spans = title.querySelectorAll('span');
-        for (let ele of spans) {
-            title.removeChild(ele);
+    function clickHandler() {
+        let type = this.getAttribute('data-type');
+        let data;
+        if (type === 'add') {
+            data = getInfo();
         }
+        else {
+            data = getWord();
+        }
+        chrome.runtime.sendMessage(
+            {type, data},
+            res => {
+                if (!res) {
+                    alert('Ooops, please try again later...');
+                }
+                else {
+                    toggleBtn();
+                }
+            }
+        );
     }
 
-    function addTag() {
-        clear();
-        let title = document.querySelector('h2.di-title');
-        let ele = document.createElement('span');
-        ele.innerHTML = '√';
-        title.appendChild(ele);
+    function toggleBtn() {
+        let header = document.querySelector('div.di-head');
+        let ele = header.querySelector(`ins.${CLS}`);
+        let type = ele.getAttribute('data-type');
+        type = type === 'add' ? 'remove' : 'add';
+        ele.setAttribute('data-type', type);
     }
 
-    function addButton() {
-        clear();
-        let title = document.querySelector('h2.di-title');
-        let button = document.createElement('span');
-        let word = getWord();
-        button.innerHTML = '+';
-        button.addEventListener('click', () => addWord(word));
-        title.appendChild(button);
+    function showBtn(type) {
+        let header = document.querySelector('div.di-head');
+        let ele = header.querySelector(`ins.${CLS}`);
+        if (!ele) {
+            ele = document.createElement('ins');
+            ele.className = CLS;
+            ele.addEventListener('click', clickHandler);
+            header.insertBefore(ele, header.firstChild);
+        }
+        ele.setAttribute('data-type', type);
     }
 
-    chrome.runtime.sendMessage({type: 'check', word: getWord()}, exist => exist ? addTag() : addButton());
+    chrome.runtime.sendMessage({type: 'check', word: getWord()}, exist => showBtn(exist ? 'remove' : 'add'));
 
 })();
