@@ -53,6 +53,23 @@
                 delete data[indexName][word];
                 return save(data).then(() => true, () => false);
             });
+        },
+
+        query(req) {
+            let start = req.start;
+            let end = req.end + 24 * 60 * 60 * 1000;
+            return query('list').then(({list = []}) => {
+                let res = [];
+                for (let item of list) {
+                    if (item.date < start) {
+                        break;
+                    }
+                    if (item.date < end) {
+                        res.push(item);
+                    }
+                }
+                return res;
+            });
         }
 
     };
@@ -62,6 +79,10 @@
         process(req).then(sendResponse);
         // Set asynchronously
         return true;
+    });
+
+    chrome.browserAction.onClicked.addListener(() => {
+        chrome.tabs.create({url: 'index.html'});
     });
 
 })();

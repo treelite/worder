@@ -7,7 +7,10 @@
     "scripts": ["main.js"],
     "persistent": false
   },
-  "permissions": ["storage"],
+  "browser_action": {
+    "default_title": "打开单词本"
+  },
+  "permissions": ["storage", "tabs"],
   "content_scripts": [
     {
       "matches": ["http://dictionary.cambridge.org/dictionary/learner-english/*"],
