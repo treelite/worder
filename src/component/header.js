@@ -7,7 +7,7 @@ const TYPE_TODAY = 'today';
 const TYPE_CUSTOM = 'custom';
 const TYPE_YESTERDAY = 'yesterday';
 const TYPE_LAST3DAYS = 'last3days';
-const TYPE_LASTWEEK = 'lastweak';
+const TYPE_LASTWEEK = 'lastweek';
 const OFFSET_DAYS = {
     [TYPE_TODAY]: 0,
     [TYPE_YESTERDAY]: 1,
@@ -32,6 +32,9 @@ function calculateDate(type) {
     };
     let offsetDays = OFFSET_DAYS[type];
     date.start.setDate(date.start.getDate() - offsetDays);
+    if (type === TYPE_YESTERDAY) {
+        date.end.setDate(date.end.getDate() - 1);
+    }
     return date;
 }
 
@@ -52,8 +55,7 @@ Vue.component(
                 let start = new Date(this.startDate);
                 let end = new Date(this.endDate);
                 if (start.getTime() > end.getTime()) {
-                    alert('开始时间必须要小于结束时间');
-                    return;
+                    [this.startDate, this.endDate] = [this.endDate, this.startDate];
                 }
                 this.custom = true;
                 this.submit(TYPE_CUSTOM);
@@ -91,11 +93,11 @@ Vue.component(
             + '<header>'
             +   '<div>'
             +     '<ul v-on:click="click" v-bind:data-selected="selected">'
-            +       `<li data-type="${TYPE_TODAY}">今天</li>`
-            +       `<li data-type="${TYPE_YESTERDAY}">昨天</li>`
-            +       `<li data-type="${TYPE_LAST3DAYS}">三天</li>`
-            +       `<li data-type="${TYPE_LASTWEEK}">一周</li>`
-            +       `<li data-type="${TYPE_CUSTOM}" v-if="custom">{{startDate}} : {{endDate}}</li>`
+            +       `<li data-type="${TYPE_TODAY}">Today</li>`
+            +       `<li data-type="${TYPE_YESTERDAY}">Yesterday</li>`
+            +       `<li data-type="${TYPE_LAST3DAYS}">3 Days</li>`
+            +       `<li data-type="${TYPE_LASTWEEK}">1 weeak</li>`
+            +       `<li data-type="${TYPE_CUSTOM}" v-if="custom" title="{{startDate}} : {{endDate}}">Custom</li>`
             +     '</ul>'
             +     'From<input type="date" v-model="startDate">To<input type="date" v-model="endDate">'
             +     '<button v-on:click="search">Search</button>'

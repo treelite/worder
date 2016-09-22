@@ -3,6 +3,19 @@
  * @author treelite(c.xinle@gmail.com)
  */
 
+function defaultData() {
+    return {
+        index: 0,
+        sorce: 0,
+        checked: false,
+        finished: false,
+        showMean: false,
+        pass: false,
+        resultMsg: '',
+        input: ''
+    };
+}
+
 Vue.component(
     'w-exam',
     {
@@ -15,18 +28,7 @@ Vue.component(
             }
         },
 
-        data() {
-            return {
-                index: 0,
-                sorce: 0,
-                checked: false,
-                finished: false,
-                showMean: false,
-                pass: false,
-                resultMsg: '',
-                input: ''
-            };
-        },
+        data: defaultData,
 
         computed: {
             len() {
@@ -39,14 +41,7 @@ Vue.component(
 
         methods: {
             play() {
-                let src = this.item.pronunciation.uk;
-                let audio = document.createElement('audio');
-                audio.setAttribute('autoplay', 'true');
-                audio.addEventListener('ended', () => {
-                    document.body.removeChild(audio);
-                });
-                audio.src = src;
-                document.body.appendChild(audio);
+                this.$dispatch('pronounce', this.item.pronunciation.uk);
             },
 
             check() {
@@ -59,13 +54,12 @@ Vue.component(
                 }
                 else {
                     this.pass = false;
-                    this.resultMsg = `X ${this.item.word}`;
+                    this.resultMsg = this.item.word;
                 }
             },
 
             toggleMean(e) {
                 this.showMean = !this.showMean;
-                e.target.innerHTML = this.showMean ? '-' : '+';
             },
 
             next() {
@@ -81,30 +75,33 @@ Vue.component(
             },
 
             finish() {
+                // reset
+                this.$data = defaultData();
                 this.$dispatch('finish');
             }
         },
 
         template: ''
             + '<div class="exam">'
+            +   '<h2>Test<span v-show="!finished">{{index + 1}}/{{len}}</span></h2>'
             +   '<div v-show="!finished">'
             +   '<p>'
-            +     '<button class="voice" v-on:click="play">Play</button>'
-            +     '<span class="toggleMean" v-on:click="toggleMean">+</span>'
+            +     '<button class="voice" v-on:click="play">Pronounce</button>'
+            +     '<a class="toggleMean" v-on:click="toggleMean">?</a>'
             +   '</p>'
             +   '<p>'
             +     '<input type="text" v-model="input" v-on:keyup.enter="check" />'
             +     '<button v-show="checked" class="next" v-on:click="next" autofocus="true">Next</button>'
             +     '<button class="check" v-show="!checked" v-on:click="check">Check</button>'
             +   '</p>'
-            +   '<p v-show="checked" class="result" v-bind:class="\'pass\' : pass">{{resultMsg}}</p>'
-            +   '<ul class="means" v-show="showMean">'
-            +     '<li v-for="mean in item.means">{{mean}}</li>'
+            +   '<p v-show="checked" class="result" v-bind:class="{pass : pass}">{{resultMsg}}</p>'
+            +   '<ul class="mean-list" v-show="showMean">'
+            +     '<li v-for="mean in item.means"><b v-if="mean.title">{{mean.title}}</b>{{mean.text}}</li>'
             +   '</ul>'
-            +   '<p><button v-on:click="finish">Cancel</button></p>'
+            +   '<p><a v-on:click="finish">Cancel</a></p>'
             +   '</div>'
-            +   '<div v-show="finished">'
-            +     '<p><strong>{{sorce}}</strong>/{{len}}</p>'
+            +   '<div class="sorce" v-show="finished">'
+            +     '<p><strong>{{sorce}}</strong> / {{len}}</p>'
             +     '<p><button v-on:click="finish">Finish</button></p>'
             +   '</div>'
             + '</div>'

@@ -10,7 +10,7 @@
     let htmlTagExp = /<[^>]+>/g;
 
     function trimHTML(str) {
-        return str.replace(htmlTagExp, '');
+        return str.replace(htmlTagExp, '').trim();
     }
 
     function getInfo() {
@@ -27,10 +27,15 @@
         let body = document.querySelector('div.di-body');
         let blocks = body.querySelectorAll('div.sense-block');
         for (let ele of blocks) {
-            res.means.push(
-                ele.querySelector('span.sense-title strong').innerHTML
-                    + ' | ' + trimHTML(ele.querySelector('b.def').innerHTML)
-            );
+            let item = {
+                text: trimHTML(ele.querySelector('b.def').innerHTML)
+            };
+            item.text = item.text.substring(0, item.text.length - 1);
+            ele = ele.querySelector('span.sense-title strong');
+            if (ele) {
+                item.title = ele.innerHTML;
+            }
+            res.means.push(item);
         }
 
         return res;

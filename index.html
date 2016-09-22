@@ -3,12 +3,15 @@
 <head>
     <meta charset="utf-8">
     <title>Worder</title>
+    <link rel="stylesheet" type="text/css" href="src/app.css">
 </head>
 <body>
     <div id="app">
         <w-header v-on:submit="search" v-bind:selected="tagSelected" v-on:test="startExam"></w-header>
-        <w-exam v-show="isExam" v-bind:source="list" v-on:finish="finishExam"></w-exam>
-        <w-list v-show="!isExam" v-bind:source="list"></w-list>
+        <main>
+            <w-exam v-show="isExam" v-bind:source="list" v-on:finish="finishExam" v-on:pronounce="play"></w-exam>
+            <w-list v-show="!isExam" v-bind:source="list" v-on:pronounce="play"></w-list>
+        </main>
     </div>
     <script src="dep/vue.min.js"></script>
     <script src="src/component/header.js"></script>
