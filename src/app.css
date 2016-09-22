@@ -1,0 +1,164 @@
+html, body {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+a {
+    color: #4078C0;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+header {
+    background: #FAFAFA;
+    border-bottom: 1px solid #E5E5E5;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+header div {
+    margin: 0 auto;
+    width: 960px;
+    line-height: 38px;
+}
+
+header div::after {
+    content: ' ';
+    display: block;
+    clear: both;
+}
+
+header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header li {
+    position: relative;
+    bottom: -1px;
+    float: left;
+    padding: 10px 20px;
+    line-height: 1;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-top: 3px solid transparent;
+}
+
+header li:last-child {
+    margin-right: 20px;
+}
+
+header ul[data-selected="today"] li[data-type="today"],
+header ul[data-selected="yesterday"] li[data-type="yesterday"],
+header ul[data-selected="last3days"] li[data-type="last3days"],
+header ul[data-selected="lastweek"] li[data-type="lastweek"],
+header ul[data-selected="custom"] li[data-type="custom"] {
+    border-color: #D26911 #E5E5E5 #FFF #E5E5E5;
+    background: #FFF;
+    border-radius: 3px 3px 0 0;
+    cursor: default;
+    color: #333;
+}
+
+header input[type="date"] {
+    width: 10em;
+    margin: 0 10px;
+}
+
+header button {
+    margin-right: 10px;
+}
+
+main {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.word-list .item {
+    padding: 0 10px;
+    margin-top: 10px;
+    border-bottom: 1px dashed #E5E5E5
+}
+
+.word-list .item:last-child {
+    border-bottom: none;
+}
+
+.word-list .item strong {
+    font-size: 25px;
+    margin-right: 20px;
+}
+
+.word-list .item p {
+    margin: 5px 0;
+}
+
+.word-list .item button {
+    float: right;
+}
+
+.word-list .item ul {
+    margin: 0 0 10px;
+}
+
+.mean-list li {
+    color: #666;
+}
+
+.mean-list li b {
+    margin-right: 5px;
+}
+
+.exam {
+    background: #FAFAFA;
+    border: 1px solid #E5E5E5;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.exam h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.exam h2 span {
+    float: right;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.exam p {
+    text-align: center;
+}
+
+.exam input[type="text"] {
+    width: 20em;
+}
+
+.exam button {
+    margin: 0 5px;
+}
+
+.exam .result {
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+    color: #CB0F0F;
+}
+.exam .result.pass {
+    color: #43CA11;
+}
+
+.exam .sorce {
+    font-size: 16px;
+}
+
+.exam .sorce strong {
+    color: #43CA11;
+    font-size: 20px;
+}
