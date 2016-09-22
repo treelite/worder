@@ -29,11 +29,20 @@ query().then(list => {
         el: '#app',
         data: {
             tagSelected: 'today',
+            isExam: false,
             list
         },
         methods: {
             search(date) {
                 query(date).then(list => this.list = list);
+            },
+
+            finishExam() {
+                this.isExam = false;
+            },
+
+            startExam() {
+                this.isExam = true;
             }
         }
     });

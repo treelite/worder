@@ -80,6 +80,10 @@ Vue.component(
                     date = calculateDate(type);
                 }
                 this.$dispatch('submit', date);
+            },
+
+            test() {
+                this.$dispatch('test');
             }
         },
 
@@ -93,8 +97,9 @@ Vue.component(
             +       `<li data-type="${TYPE_LASTWEEK}">一周</li>`
             +       `<li data-type="${TYPE_CUSTOM}" v-if="custom">{{startDate}} : {{endDate}}</li>`
             +     '</ul>'
-            +     '从<input type="date" v-model="startDate">到<input type="date" v-model="endDate">'
-            +     '<button v-on:click="search">查询</button>'
+            +     'From<input type="date" v-model="startDate">To<input type="date" v-model="endDate">'
+            +     '<button v-on:click="search">Search</button>'
+            +     '<button v-on:click="test">Test</button>'
             + '</div>'
     }
 );

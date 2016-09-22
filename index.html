@@ -6,11 +6,13 @@
 </head>
 <body>
     <div id="app">
-        <w-header v-on:submit="search" v-bind:selected="tagSelected"></w-header>
-        <w-list v-bind:source="list"></w-list>
+        <w-header v-on:submit="search" v-bind:selected="tagSelected" v-on:test="startExam"></w-header>
+        <w-exam v-show="isExam" v-bind:source="list" v-on:finish="finishExam"></w-exam>
+        <w-list v-show="!isExam" v-bind:source="list"></w-list>
     </div>
     <script src="dep/vue.min.js"></script>
     <script src="src/component/header.js"></script>
+    <script src="src/component/exam.js"></script>
     <script src="src/component/list.js"></script>
     <script src="src/app.js"></script>
 </body>
