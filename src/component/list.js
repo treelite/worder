@@ -13,7 +13,7 @@ Vue.component(
                 type: Array,
                 default() {
                     return [];
-                },
+                }
             }
         },
 
