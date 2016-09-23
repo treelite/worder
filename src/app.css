@@ -94,6 +94,10 @@ main {
     margin-right: 20px;
 }
 
+.word-list .item .phon {
+    cursor: help;
+}
+
 .word-list .item p {
     margin: 5px 0;
 }

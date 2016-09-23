@@ -19,7 +19,7 @@ Vue.component(
 
         methods: {
             play(e) {
-                let src = e.target.getAttribute('data-src');
+                let src = e.target.parentNode.getAttribute('data-src');
                 this.$dispatch('pronounce', src);
             }
         },
@@ -27,10 +27,10 @@ Vue.component(
         template: ''
             + '<section class="word-list">'
             +   '<div class="item" v-for="item in source">'
-            +     '<p>'
+            +     '<p data-src="{{item.pronunciation.uk}}">'
             +       '<strong>{{item.word}}</strong>'
-            +       '<span class="phon">{{item.phonogram}}</span>'
-            +       '<button v-on:click="play" data-src="{{item.pronunciation.uk}}">Pronounce</button>'
+            +       '<span class="phon" v-on:click="play">{{item.phonogram}}</span>'
+            +       '<button v-on:click="play">Pronounce</button>'
             +     '</p>'
             +     '<ul class="mean-list">'
             +       '<li v-for="mean in item.means"><b v-if="mean.title">{{mean.title}}</b>{{mean.text}}</li>'
