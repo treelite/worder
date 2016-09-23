@@ -30,7 +30,7 @@
             return query(['list', `${indexName}`]).then(data => {
                 let list = data.list || [];
                 meta.date = Date.now();
-                list.push(meta);
+                list.unshift(meta);
                 let index = data[indexName] || {};
                 index[meta.word] = true;
                 data.list = list;
