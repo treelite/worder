@@ -3,6 +3,8 @@
  * @author treelite(c.xinle@gmail.com)
  */
 
+import Vue from 'vue';
+
 function defaultData() {
     return {
         index: 0,

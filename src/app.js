@@ -3,16 +3,18 @@
  * @author treelite(c.xinle@gmail.com)
  */
 
-const DAY = 24 * 60 * 60 * 1000;
+import Vue from 'vue';
+import {today} from './util';
 
-let today = () => Math.floor(Date.now() / DAY) * DAY;
+import './component/header';
+import './component/exam';
+import './component/list';
 
 function query(date) {
     if (!date) {
-        let time = new Date(today());
         date = {
-            start: time,
-            end: time
+            start: today(),
+            end: today()
         };
     }
 
@@ -34,6 +36,7 @@ query().then(list => {
         },
         methods: {
             search(date) {
+                this.isExam = false;
                 query(date).then(list => this.list = list);
             },
 

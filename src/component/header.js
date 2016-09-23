@@ -3,6 +3,9 @@
  * @author treelite(c.xinle@gmail.com)
  */
 
+import Vue from 'vue';
+import {today} from '../util';
+
 const TYPE_TODAY = 'today';
 const TYPE_CUSTOM = 'custom';
 const TYPE_YESTERDAY = 'yesterday';
@@ -27,8 +30,8 @@ function formatDate(date = new Date()) {
 
 function calculateDate(type) {
     let date = {
-        start: new Date(formatDate()),
-        end: new Date(formatDate())
+        start: today(),
+        end: today()
     };
     let offsetDays = OFFSET_DAYS[type];
     date.start.setDate(date.start.getDate() - offsetDays);
@@ -41,7 +44,7 @@ function calculateDate(type) {
 Vue.component(
     'w-header',
     {
-        props: ['selected'],
+        props: ['selected', 'testable'],
         data() {
             return {
                 custom: null,
@@ -101,7 +104,7 @@ Vue.component(
             +     '</ul>'
             +     'From<input type="date" v-model="startDate">To<input type="date" v-model="endDate">'
             +     '<button v-on:click="search">Search</button>'
-            +     '<button v-on:click="test">Test</button>'
+            +     '<button v-on:click="test" v-bind:disabled="!testable">Test</button>'
             + '</div>'
     }
 );
