@@ -34,6 +34,16 @@ query().then(list => {
             isExam: false,
             list
         },
+        watch: {
+            isExam(val) {
+                if (val) {
+                    this.$refs.examArea.show();
+                }
+                else {
+                    this.$refs.examArea.hide();
+                }
+            }
+        },
         methods: {
             search(date) {
                 this.isExam = false;

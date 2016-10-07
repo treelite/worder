@@ -5,6 +5,8 @@
 
 import Vue from 'vue';
 
+let delayFocus = (vm, name) => vm.$nextTick(() => vm.$els[name].focus());
+
 function defaultData() {
     return {
         index: -1,
@@ -45,12 +47,28 @@ Vue.component(
             }
         },
 
+        watch: {
+            checked(val) {
+                delayFocus(this, val ? 'nextButton' : 'pronounceButton');
+            },
+
+            finished(val) {
+                if (val) {
+                    delayFocus(this, 'finishButton');
+                }
+            }
+        },
+
         methods: {
             play() {
                 this.$dispatch('pronounce', this.item.pronunciation.uk);
+                this.$els.input.focus();
             },
 
             check() {
+                if (this.checked) {
+                    return;
+                }
                 let input = this.input.trim();
                 this.checked = true;
                 if (input === this.item.word) {
@@ -87,6 +105,17 @@ Vue.component(
                 // reset
                 this.$data = defaultData();
                 this.$dispatch('finish');
+            },
+
+            show() {
+                this.$el.style.display = '';
+                this.$dispatch('show');
+                this.$els.pronounceButton.focus();
+            },
+
+            hide() {
+                this.$el.style.display = 'none';
+                this.$dispatch('hide');
             }
         },
 
@@ -95,12 +124,12 @@ Vue.component(
             +   '<h2>Test<span v-show="!finished">{{len}}</span></h2>'
             +   '<div v-show="!finished">'
             +     '<p>'
-            +       '<button class="voice" v-on:click="play">Pronounce</button>'
+            +       '<button class="voice" v-on:click="play" v-el:pronounce-button>Pronounce</button>'
             +       '<a class="toggleMean" v-on:click="toggleMean">?</a>'
             +     '</p>'
             +     '<p>'
-            +       '<input type="text" v-model="input" v-on:keyup.enter="check" />'
-            +       '<button v-show="checked" class="next" v-on:click="next" autofocus="true">Next</button>'
+            +       '<input type="text" v-model="input" v-el:input v-on:keypress.enter="check" />'
+            +       '<button v-show="checked" class="next" v-on:click="next" v-el:next-button>Next</button>'
             +       '<button class="check" v-show="!checked" v-on:click="check">Check</button>'
             +     '</p>'
             +     '<p v-show="checked" class="result" v-bind:class="{pass : pass}">{{resultMsg}}</p>'
@@ -111,7 +140,7 @@ Vue.component(
             +   '</div>'
             +   '<div class="sorce" v-show="finished">'
             +     '<p><strong>{{sorce}}</strong> / {{count}}</p>'
-            +     '<p><button v-on:click="finish">Finish</button></p>'
+            +     '<p><button v-on:click="finish" v-el:finish-button>Finish</button></p>'
             +   '</div>'
             + '</div>'
     }
