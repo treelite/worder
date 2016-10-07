@@ -26,10 +26,10 @@ Vue.component(
 
         template: ''
             + '<section class="word-list">'
-            +   '<div class="item" v-for="item in source">'
+            +   '<div class="word-item" v-for="item in source">'
             +     '<p data-src="{{item.pronunciation.uk}}">'
             +       '<strong>{{item.word}}</strong>'
-            +       '<span class="phon" v-on:click="play">{{item.phonogram}}</span>'
+            +       '<span class="pos">{{item.type}}</span><span class="phon" v-on:click="play">{{item.phonogram}}</span>'
             +       '<button v-on:click="play">Pronounce</button>'
             +     '</p>'
             +     '<ul class="mean-list">'

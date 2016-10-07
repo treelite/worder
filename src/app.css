@@ -79,42 +79,50 @@ main {
     margin: 0 auto;
 }
 
-.word-list .item {
+.word-list .word-item {
     padding: 0 10px;
     margin-top: 10px;
     border-bottom: 1px dashed #E5E5E5
 }
 
-.word-list .item:last-child {
+.word-list .word-item:last-child {
     border-bottom: none;
 }
 
-.word-list .item strong {
+.word-list .word-item button {
+    float: right;
+}
+
+
+
+.word-item strong {
     font-size: 25px;
     margin-right: 20px;
 }
 
-.word-list .item .phon {
+.word-item .phon {
     cursor: help;
 }
 
-.word-list .item p {
+.word-item .pos {
+    font-style: italic;
+    margin-right: 10px;
+}
+
+.word-item p {
     margin: 5px 0;
 }
 
-.word-list .item button {
-    float: right;
-}
-
-.word-list .item ul {
+.word-item .mean-list {
     margin: 0 0 10px;
 }
 
-.mean-list li {
+
+.word-item .mean-list li {
     color: #666;
 }
 
-.mean-list li b {
+.word-item .mean-list li b {
     margin-right: 5px;
 }
 
@@ -138,6 +146,11 @@ main {
 
 .exam p {
     text-align: center;
+}
+
+.exam .word-item p {
+    text-align: left;
+    margin-left: 20px;
 }
 
 .exam input[type="text"] {
