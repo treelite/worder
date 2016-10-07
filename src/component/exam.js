@@ -80,9 +80,10 @@ Vue.component(
                     this.pass = false;
                     this.resultMsg = this.item.word;
                 }
+                this.showMean = true;
             },
 
-            toggleMean(e) {
+            toggleMean() {
                 this.showMean = !this.showMean;
             },
 
@@ -97,6 +98,7 @@ Vue.component(
                 else {
                     this.checked = false;
                     this.input = '';
+                    this.showMean = false;
                 }
                 this.count++;
             },
