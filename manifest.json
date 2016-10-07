@@ -14,8 +14,8 @@
   "content_scripts": [
     {
       "matches": ["http://dictionary.cambridge.org/dictionary/learner-english/*"],
-      "js": ["int/worder.js"],
-      "css": ["int/worder.css"]
+      "js": ["injection/worder.js"],
+      "css": ["injection/worder.css"]
     }
   ]
 }
