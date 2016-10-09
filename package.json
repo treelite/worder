@@ -4,15 +4,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build": "webpack && cp src/app.css asset/"
+    "build": "webpack"
   },
   "author": "treelite <c.xinle@gmail.com>",
-  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.0.1"
+  },
   "devDependencies": {
-    "babel-core": "^6.14.0",
-    "babel-loader": "^6.2.5",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.14.0",
-    "vue": "1.0.26-csp",
-    "webpack": "^1.13.2"
-  }
+    "css-loader": "^0.25.0",
+    "vue-loader": "^9.5.1",
+    "webpack": "^2.1.0-beta.25"
+  },
+  "license": "MIT"
 }
