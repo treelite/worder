@@ -1,13 +1,13 @@
 module.exports = {
-    entry: './src/app.js',
+    entry: './src/main.js',
     output: {
         path: './asset',
-        filename: 'app.js'
+        filename: 'main.js'
     },
     module: {
         loaders: [
             {
-                test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'
+                test: /\.vue/, exclude: /node_modules/, loader: 'vue'
             }
         ]
     }

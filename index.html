@@ -3,16 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>Worder</title>
-    <link rel="stylesheet" type="text/css" href="asset/app.css">
 </head>
 <body>
-    <div id="app">
-        <w-header v-on:submit="search" v-bind:selected="tagSelected" v-bind:testable="!!list.length" v-on:test="startExam"></w-header>
-        <main>
-            <w-exam v-ref:exam-area style="display:none" v-if="list.length" v-bind:list="list" v-on:finish="finishExam" v-on:pronounce="play"></w-exam>
-            <w-list v-show="!isExam" v-bind:source="list" v-on:pronounce="play"></w-list>
-        </main>
-    </div>
-    <script src="asset/app.js"></script>
+    <div id="app"></div>
+    <script src="asset/main.js"></script>
 </body>
 </html>
