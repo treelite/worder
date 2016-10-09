@@ -17,7 +17,8 @@ function defaultData() {
         showMean: false,
         pass: false,
         resultMsg: '',
-        input: ''
+        input: '',
+        words: null
     };
 }
 
@@ -25,7 +26,7 @@ Vue.component(
     'w-exam',
     {
         props: {
-            source: {
+            list: {
                 type: Array,
                 default() {
                     return [];
@@ -36,6 +37,12 @@ Vue.component(
         data: defaultData,
 
         computed: {
+            source() {
+                if (!this.words) {
+                    this.words = this.list.slice(0);
+                }
+                return this.words;
+            },
             len() {
                 return this.source.length;
             },
@@ -89,8 +96,7 @@ Vue.component(
 
             next() {
                 let index = this.index;
-                let source = this.source.slice(0, index);
-                this.source = source.concat(this.source.slice(index + 1, this.len));
+                this.source.splice(index, 1);
                 this.index = -1;
                 if (!this.source.length) {
                     this.finished = true;

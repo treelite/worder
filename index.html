@@ -9,7 +9,7 @@
     <div id="app">
         <w-header v-on:submit="search" v-bind:selected="tagSelected" v-bind:testable="!!list.length" v-on:test="startExam"></w-header>
         <main>
-            <w-exam v-ref:exam-area style="display:none" v-if="list.length" v-bind:source="list" v-on:finish="finishExam" v-on:pronounce="play"></w-exam>
+            <w-exam v-ref:exam-area style="display:none" v-if="list.length" v-bind:list="list" v-on:finish="finishExam" v-on:pronounce="play"></w-exam>
             <w-list v-show="!isExam" v-bind:source="list" v-on:pronounce="play"></w-list>
         </main>
     </div>
