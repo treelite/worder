@@ -1,6 +1,12 @@
 <template>
     <div class="worder">
-        <w-header v-bind:selected="tagSelected"></w-header>
+        <w-header default-selected="today" v-on:submit="search" v-bind:testable="!!list.length" v-on:test="startExam" />
+        <main v-if="list.length">
+            <w-exam ref="examArea" style="display:none" v-bind:list="list" v-on:finish="finishExam" />
+            <section class="word-list" v-show="!isExam">
+                <w-item v-for="item in list" v-bind:data="item" />
+            </section>
+        </main>
     </div>
 </template>
 
@@ -17,10 +23,27 @@
         text-decoration: none;
         cursor: pointer;
     }
+
+    main {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+    .word-list .word-item {
+        padding: 0 10px;
+        margin-top: 10px;
+        border-bottom: 1px dashed #E5E5E5
+    }
+
+    .word-list .word-item:last-child {
+        border-bottom: none;
+    }
 </style>
 
 <script>
     import {today} from '../util';
+    import WItem from './item.vue';
+    import WExam from './exam.vue';
     import WHeader from './header.vue';
 
     function query(date) {
@@ -40,23 +63,19 @@
     }
 
     export default {
-        components: {WHeader},
+        components: {WHeader, WItem, WExam},
 
         data() {
             return {
-                tagSelected: 'today',
                 isExam: false,
                 list: []
             };
         },
 
-        events: {
-            mounted() {
-                query().then(list => this.list = list);
-            }
+        mounted() {
+            query().then(list => this.list = list);
         },
 
-        /*
         watch: {
             isExam(val) {
                 if (val) {
@@ -67,7 +86,6 @@
                 }
             }
         },
-        */
 
         methods: {
             search(date) {

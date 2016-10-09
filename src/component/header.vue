@@ -98,10 +98,13 @@
     function formatDate(date = new Date()) {
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
+        let day = date.getDate();
         if (month < 10) {
             month = `0${month}`;
         }
-        let day = date.getDate();
+        if (day < 10) {
+            day = `0${day}`;
+        }
         return `${year}-${month}-${day}`;
     }
 
@@ -119,13 +122,14 @@
     }
 
     export default {
-        props: ['selected', 'testable'],
+        props: ['defaultSelected', 'testable'],
 
         data() {
             return {
                 custom: null,
                 endDate: formatDate(),
-                startDate: formatDate()
+                startDate: formatDate(),
+                selected: this.defaultSelected
             };
         },
 
@@ -150,7 +154,6 @@
 
             submit(type) {
                 let date;
-                this.selected = type;
                 if (type === TYPE_CUSTOM) {
                     date = {
                         start: new Date(this.startDate),
@@ -160,11 +163,12 @@
                 else {
                     date = calculateDate(type);
                 }
-                this.$dispatch('submit', date);
+                this.$emit('submit', date);
+                this.selected = type;
             },
 
             test() {
-                this.$dispatch('test');
+                this.$emit('test');
             }
         }
     }
