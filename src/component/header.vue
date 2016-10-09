@@ -17,10 +17,13 @@
 
 <style>
     header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
         background: #FAFAFA;
         border-bottom: 1px solid #E5E5E5;
         padding-top: 10px;
-        margin-bottom: 20px;
         color: #666;
     }
 

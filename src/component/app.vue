@@ -26,7 +26,7 @@
 
     main {
         width: 600px;
-        margin: 0 auto;
+        margin: 70px auto 0;
     }
 
     .word-list .word-item {
@@ -99,15 +99,6 @@
 
             startExam() {
                 this.isExam = true;
-            },
-            play(src) {
-                let audio = document.createElement('audio');
-                audio.setAttribute('autoplay', 'true');
-                audio.addEventListener('ended', () => {
-                    document.body.removeChild(audio);
-                });
-                audio.src = src;
-                document.body.appendChild(audio);
             }
         }
     }
