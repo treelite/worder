@@ -69,7 +69,12 @@ Vue.component(
         methods: {
             play() {
                 this.$dispatch('pronounce', this.item.pronunciation.uk);
-                this.$els.input.focus();
+                if (this.checked) {
+                    this.$els.nextButton.focus();
+                }
+                else {
+                    this.$els.input.focus();
+                }
             },
 
             check() {
