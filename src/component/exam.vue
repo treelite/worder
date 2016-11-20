@@ -128,6 +128,10 @@
         },
 
         watch: {
+            list(val) {
+                this.source = val.slice(0);
+            },
+
             checked(val) {
                 delayFocus(this, val ? 'nextButton' : 'pronounceButton');
             },
