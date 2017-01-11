@@ -84,7 +84,7 @@
 </style>
 
 <script>
-    import {today} from '../util';
+    import {normalizeDay, today} from '../util';
 
     const TYPE_TODAY = 'today';
     const TYPE_CUSTOM = 'custom';
@@ -159,8 +159,8 @@
                 let date;
                 if (type === TYPE_CUSTOM) {
                     date = {
-                        start: new Date(this.startDate),
-                        end: new Date(this.endDate)
+                        start: normalizeDay(this.startDate),
+                        end: normalizeDay(this.endDate)
                     };
                 }
                 else {
