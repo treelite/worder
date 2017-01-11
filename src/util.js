@@ -12,7 +12,23 @@ const HOUR = 60 * 60 * 1000;
  * @return {Date}
  */
 export function today() {
-    let date = new Date();
+    return normalizeDay();
+}
+
+/**
+ * 调整日期对象到当天零时
+ *
+ * @param {string=} day 日期，比如 "2017-01-11"，省略则表示今天
+ * @return {Date}
+ */
+export function normalizeDay(day) {
+    let date;
+    if (day) {
+        date = new Date(day);
+    }
+    else {
+        date = new Date();
+    }
     date.setHours(0);
     let time = date.getTime();
     time = Math.floor(time / HOUR) * HOUR;

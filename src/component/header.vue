@@ -5,7 +5,7 @@
                 <li data-type="today">Today</li>
                 <li data-type="yesterday">Yesterday</li>
                 <li data-type="last3days">3 Days</li>
-                <li data-type="lastweek">1 weeak</li>
+                <li data-type="lastweek">1 week</li>
                 <li data-type="custom" v-if="custom" v-bind:title="startDate + ' : ' + endDate">Custom</li>
             </ul>
             From<input type="date" v-model="startDate" />To<input type="date" v-model="endDate" />
@@ -84,7 +84,7 @@
 </style>
 
 <script>
-    import {today} from '../util';
+    import {normalizeDay, today} from '../util';
 
     const TYPE_TODAY = 'today';
     const TYPE_CUSTOM = 'custom';
@@ -159,8 +159,8 @@
                 let date;
                 if (type === TYPE_CUSTOM) {
                     date = {
-                        start: new Date(this.startDate),
-                        end: new Date(this.endDate)
+                        start: normalizeDay(this.startDate),
+                        end: normalizeDay(this.endDate)
                     };
                 }
                 else {
