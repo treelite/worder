@@ -5,7 +5,7 @@
                 <li data-type="today">Today</li>
                 <li data-type="yesterday">Yesterday</li>
                 <li data-type="last3days">3 Days</li>
-                <li data-type="lastweek">1 weeak</li>
+                <li data-type="lastweek">1 week</li>
                 <li data-type="custom" v-if="custom" v-bind:title="startDate + ' : ' + endDate">Custom</li>
             </ul>
             From<input type="date" v-model="startDate" />To<input type="date" v-model="endDate" />
