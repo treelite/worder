@@ -27,10 +27,11 @@
         let body = document.querySelector('div.di-body');
         let blocks = body.querySelectorAll('div.sense-block');
         for (let ele of blocks) {
-            let item = {
-                text: trimHTML(ele.querySelector('b.def').innerHTML)
-            };
-            item.text = item.text.substring(0, item.text.length - 1);
+            let text = trimHTML(ele.querySelector('b.def').innerHTML);
+            if (text.charAt(text.length - 1) === ':') {
+                text = text.substring(0, text.length - 1);
+            }
+            let item = {text};
             ele = ele.querySelector('span.sense-title strong');
             if (ele) {
                 item.title = ele.innerHTML;
